@@ -6,7 +6,7 @@
 body {
   display: flex;
   justify-content: center;
-  background-image: url("/images/site/checkerboard.jpg");
+  background-image: url("/images/site/small_check.jpg");
 }
 .content {
   background-color: white;
@@ -83,7 +83,6 @@ nav ul li a {
 .button {
   padding: 10px 20px;
   font-size: medium;
-  background-color: #02b0d2;
   color: white;
   border: none;
   cursor: pointer;
@@ -151,52 +150,31 @@ footer {
   padding-left: 20px;
 }
 @media screen and (max-width: 768px) {
+  body {
+    background-image: url("/images/site/small_check.png");
+  }
+  .content {
+    width: 100%;
+  }
   .bottom-content {
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
+    align-items: center;
   }
   .div-delorean {
-    /* Aumentamos el ancho en móvil para que el texto ocupe más espacio 
-    disponible y no se apriete. 
-    */
-    width: 90%;
-    top: 0; /* Mueve la capa un poco más arriba si es necesario */
+    width: 20%;
+    top: 0;
     padding: 10px;
   }
-
-  /* Reducimos el tamaño de la fuente para evitar que el texto se desborde 
-  en el ancho limitado. 
-  */
   .div-delorean h2 {
-    font-size: 1em; /* Tamaño más pequeño para el título */
+    font-size: 1em;
   }
 
   .div-delorean li {
-    font-size: 0.9em; /* Tamaño más pequeño para el párrafo */
+    font-size: 0.9em;
   }
 
-  .div-delorean .button {
-    font-size: 0.8em;
-  }
-  .delorean-button{
-    width: 50%;
-
-  }
-}
-
-/* Estilos adicionales para los elementos dentro del div */
-.capa-texto h1 {
-  margin-top: 0;
-}
-.capa-texto .boton {
-  display: inline-block;
-  background-color: #ff5722;
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  margin-top: 10px;
-  border-radius: 5px;
   .reviews-section {
     width: 100%;
   }
