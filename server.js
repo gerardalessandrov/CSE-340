@@ -1,52 +1,50 @@
-/* ******************************************
- * This server.js file is the primary file of the
- * application. It is used to control the project.
- *******************************************/
+/******************************************
+ * Primary server.js file of the application.
+ * Controls the project startup and configuration.
+ ******************************************/
+
 /* ***********************
  * Require Statements
  *************************/
-
-const inventoryRoute = require("./routes/inventoryRoute");
-const baseController = require("./controllers/baseController");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const env = require("dotenv").config();
-const app = express();
+const flash = require("connect-flash");
+const baseController = require("./controllers/baseController");
+const inventoryRoute = require("./routes/inventoryRoute");
 const static = require("./routes/static");
 const utilities = require("./utilities/");
 
 /* ***********************
- * View Engine and Template
+ * Create Express App
+ *************************/
+const app = express();
+
+/* ***********************
+ * View Engine and Template Settings
  *************************/
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-app.set("layout", "./layouts/layout"); // not at views root
+app.set("layout", "./layouts/layout"); // Not at views root
+
+/* ***********************
+ * Middleware: Body Parsers
+ *************************/
+app.use(express.json()); // Parses incoming requests with JSON
+app.use(express.urlencoded({ extended: true })); // Parses form data
+
 /* ***********************
  * Routes
  *************************/
-app.use(static);
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- ************************/
-const port = process.env.PORT;
-const host = process.env.HOST;
+app.use(static); // Static file routes (e.g., CSS, JS)
+app.use("/inv", inventoryRoute); // Inventory-related routes
+app.get("/", baseController.buildHome); // Home route
 
 /* ***********************
- * Log statement to confirm server operation
+ * Error Handling Middleware
  *************************/
-app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`);
-});
-//Index Route
-// app.get("/",function(req,res){
-//   res.render("index",{title:"Home"})
-// })
-// app.use(require("./routes/static"));
-// app.get("/", utilities.handleErrors(baseController.buildHome));
-app.get("/", baseController.buildHome);
-app.use("/inv", inventoryRoute);
-// Error handling middleware
+
+// Global Error Handler
 app.use(async function (err, req, res, next) {
   console.error("Global Error Handler:", err.stack);
   const nav = await utilities.getNav();
@@ -56,12 +54,30 @@ app.use(async function (err, req, res, next) {
     nav,
   });
 });
-// Captura errores 404 (ruta no encontrada)
+
+// 404 Not Found Handler
 app.use(async (req, res, next) => {
-  let nav = await utilities.getNav();
+  const nav = await utilities.getNav();
   res.status(404).render("error", {
     title: "404",
-    message: "Sorry,we appear to have lost that page.",
+    message: "Sorry, we appear to have lost that page.",
     nav,
   });
+});
+app.use(async (req, res, next) => {
+  res.locals.nav = await Util.getNav();
+  next();
+});
+
+/* ***********************
+ * Local Server Info from .env
+ *************************/
+const port = process.env.PORT;
+const host = process.env.HOST;
+
+/* ***********************
+ * Start Server
+ *************************/
+app.listen(port, () => {
+  console.log(`App listening on ${host}:${port}`);
 });
