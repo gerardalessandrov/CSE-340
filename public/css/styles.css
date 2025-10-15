@@ -43,8 +43,8 @@ nav {
 }
 nav ul {
   display: flex;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   justify-content: space-around;
   font-size: small;
   list-style: none;
@@ -53,7 +53,14 @@ nav ul li a {
   color: white;
   text-decoration: none;
 }
-
+nav ul li a:hover {
+  background-color: white;
+  color: black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 /* Hero Section */
 .hero-section {
   position: relative;
@@ -153,9 +160,72 @@ nav ul li a {
 footer {
   padding-left: 20px;
 }
+/* VehicleDetailHtml*/
+#inv-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+#inv-display li {
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* optional max-width if needed */
+  width: 130px;
+}
+.error {
+  background-color: azure;
+  height: 100%;
+}
+#inv-display h2 {
+  font-size: smaller;
+  width: 100%;
+}
+#inv-display .namePrice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 1rem;
+  max-height: 50%;
+  width: 100%;
+}
+#inv-display img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.vehicle-detail {
+  display: flex;
+  width: 100%;
+}
+.vehicle-detail img {
+  width: 40%;
+  height: 50%;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
 @media screen and (max-width: 768px) {
   body {
     background-image: none;
+  }
+  #inv-display {
+    display: block;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+  }
+  .vehicle-detail {
+    display: block;
+    width: 100%;
   }
   .content {
     width: 100%;
